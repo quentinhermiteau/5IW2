@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import './styles.css';
+import "./styles.css";
 
 export default function Exo1() {
   const name = "Tyler McGinnis";
@@ -8,20 +8,23 @@ export default function Exo1() {
   const img = "https://avatars0.githubusercontent.com/u/2933430";
 
   const getDate = () => {
-    return new Date().toDateString();
-  }
+    return new Date().toLocaleDateString();
+  };
 
   return (
-    <div id="notice">
-      Modifie ce code pour qu'il fonctionne correctement et que les informations de l'utilisateur soit affichées dans la div badge
-    </div>
-    <div className="badge">
-      <img alt={``} src={``} />
-      <div>
-        <h4>NAME</h4>
-        <p>@HANDLE</p>
+    <>
+      <div id="notice">
+        Modifie ce code pour qu'il fonctionne correctement et que les
+        informations de l'utilisateur soit affichées dans la div badge
       </div>
-    </div>
-    <div>Date du jour: </div>
+      <div className="badge">
+        <img alt={name} src={img} />
+        <div>
+          <h4>{name}</h4>
+          <p>@{handle}</p>
+        </div>
+      </div>
+      <div>Date du jour: {getDate()}</div>
+    </>
   );
 }

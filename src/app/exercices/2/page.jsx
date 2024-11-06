@@ -24,11 +24,19 @@ export default function List() {
       </div>
       <div>
         Friends:
-        <ul></ul>
+        <ul>
+          {friends.map((friend) => (
+            <li key={friend.id}>{friend.name}</li>
+          ))}
+        </ul>
       </div>
       <div>
         Friends no key:
-        <ul></ul>
+        <ul>
+          {friendsNoKey.map((friend, index) => (
+            <li key={index}>{friend}</li>
+          ))}
+        </ul>
       </div>
     </>
   );
