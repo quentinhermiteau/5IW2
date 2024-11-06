@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 const translations = {
   en: {
@@ -28,18 +28,25 @@ const languageContext = createContext({
 });
 
 function LanguageProvider({ children }) {
-  const language = "en";
+  const [language, setLanguage] = useState("en");
 
-  const changeLanguage = () => {};
+  const changeLanguage = (value) => {
+    setLanguage(value);
+  };
 
-  const translation = () => {};
+  const translation = (key) => {
+    return translations[language][key];
+  };
 
-  return null;
+  return (
+    <languageContext.Provider value={{ language, changeLanguage, translation }}>
+      {children}
+    </languageContext.Provider>
+  );
 }
 
 function LanguageSwitcher() {
-  const language = null;
-  const changeLanguage = () => {};
+  const { language, changeLanguage } = useContext(languageContext);
 
   return (
     <div>
@@ -54,7 +61,7 @@ function LanguageSwitcher() {
 }
 
 function Greeting() {
-  const translation = () => {};
+  const { translation } = useContext(languageContext);
 
   return (
     <div>
