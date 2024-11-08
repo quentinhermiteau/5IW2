@@ -6,6 +6,7 @@ export default function Page() {
   const [id, setId] = useState(1);
   const [todo, setTodo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [ignore, setIgnore] = useState(false);
 
   /**
    * Mauvais comportement quand on appuie plusieurs fois sur le bouton "Next"
@@ -25,12 +26,19 @@ export default function Page() {
           .then((response) => ({ response }))
           .catch((error) => ({ error }));
 
-        setTodo(response);
+        if (!ignore) {
+          setTodo(response);
+          setIgnore(false);
+        }
         setLoading(false);
       }, 500);
     };
 
     handleFetchTodo();
+
+    return () => {
+      setIgnore(false);
+    };
   }, [id]);
 
   return (
