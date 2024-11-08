@@ -1,28 +1,55 @@
 "use client";
 
+import { useReducer } from "react";
+
 const initialState = {
   past: [],
-  present: 0,
+  count: 0,
   future: [],
 };
 
 function reducer(state, action) {
-  const { past, present, future } = state;
+  const { past, count, future } = state;
 
-  return state;
+  switch (action) {
+    case "increment":
+      return {
+        past: [...past, count],
+        count: count + 1,
+        future,
+      };
+    case "decrement":
+      return {
+        past: [...past, count],
+        count: count - 1,
+        future,
+      };
+    case "undo":
+      return {
+        past: past.slice(0, -1),
+        count: past[past.length - 1],
+        future: [...future, count],
+      };
+    case "redo":
+      return {
+        past: [...past, count],
+        count: future[future.length - 1],
+        future: future.slice(0, -1),
+      };
+  }
 }
 
 export default function CounterWithUndoRedo() {
-  const state = initialState;
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const handleIncrement = () => {};
-  const handleDecrement = () => {};
-  const handleUndo = () => {};
-  const handleRedo = () => {};
+  const handleIncrement = () => dispatch("increment");
+  const handleDecrement = () => dispatch("decrement");
+  const handleUndo = () => dispatch("undo");
+  const handleRedo = () => dispatch("redo");
 
   return (
     <div>
-      <h1>Counter: {state.present}</h1>
+      <h1>Counter: {state.count}</h1>
       <button className="link" onClick={handleIncrement}>
         Increment
       </button>
